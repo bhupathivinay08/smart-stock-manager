@@ -5,23 +5,22 @@ from fastapi.middleware.cors import CORSMiddleware
 from databases import get_db, SessionLocal, engine
 import database_models
 from sqlalchemy.orm import Session
-import os
-from dotenv import load_dotenv
-load_dotenv()
 
 app = FastAPI()
 
 app.add_middleware(
-     CORSMiddleware,
-allow_origins=[o.strip() for o in os.getenv("CORS_ORIGINS", "http://localhost:3000").split(",")],
-     allow_methods=["*"]
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 database_models.Base.metadata.create_all(bind = engine)
 
 @app.get("/")
 def greet():
-    return "WEL-COME to TELSUKO TRAC"
+    return "Welcome to Smart Stock Manager"
 
 products = [
     Product(id = 1, name = "laptop", description = "budget_laptop", price = 99,quantity = 5),
