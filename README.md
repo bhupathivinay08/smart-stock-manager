@@ -2,7 +2,7 @@
 
 
 
-Full-stack inventory management system — \*\*FastAPI + PostgreSQL + React\*\*.
+Full-stack inventory management system — FastAPI + PostgreSQL + React.
 
 
 
