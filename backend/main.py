@@ -5,12 +5,16 @@ from fastapi.middleware.cors import CORSMiddleware
 from databases import get_db, SessionLocal, engine
 import database_models
 from sqlalchemy.orm import Session
+import os
+from dotenv import load_dotenv
+
+
+load_dotenv()
 
 app = FastAPI()
-
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=[o.strip() for o in os.getenv("CORS_ORIGINS", "http://localhost:3000").split(",")],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -29,13 +33,6 @@ products = [
     Product(id = 5, name =  "keyboard", description = "laptop keyboard", price = 19, quantity =2)
 
 ]
-
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
 
 def init_db():
     db = SessionLocal()
